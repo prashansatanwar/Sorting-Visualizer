@@ -1,7 +1,12 @@
 import React from 'react';
-import {Button} from 'reactstrap';
+import {Button, Container} from 'reactstrap';
 import './SortingVisualizer.css';
 import {mergeSort,bubbleSort} from './SortingAlgorithms.js';
+
+const ANIMATION_SPEED_MS = 1;
+const NUMBER_OF_ARRAY_BARS = 470;
+const PRIMARY_COLOR = 'linear-gradient(#0A2342, #A3EFF5)';
+const SECONDARY_COLOR = 'red';
 
 class SortingVisualizer extends React.Component{
     constructor(props){
@@ -10,6 +15,8 @@ class SortingVisualizer extends React.Component{
         this.state = {
             array: [],
         };
+
+        // this.mergeSort=this.mergeSort.bind(this);
     }
 
     componentDidMount() {
@@ -18,20 +25,39 @@ class SortingVisualizer extends React.Component{
     
     resetArray(){
         const array = [];
-        for(let i = 0; i<100; i++){
-            array.push(randomIntFromInterval(10,1000));
+        for(let i = 0; i<NUMBER_OF_ARRAY_BARS; i++){
+            array.push(randomIntFromInterval(10,1000)*0.6);
         }
 
         this.setState({array});
     }
 
     mergeSort(){
-        const javaScriptSortedArray = this.state.array
-        .sort((a,b) => a-b);
+        const animations = mergeSort(this.state.array);
 
-        const sortedArray = mergeSort(this.state.array);
+        for(let i = 0; i<animations.length; i++){
+            const arrayBars = document.getElementsByClassName('array-bar');
+            const isColorChange = i%3 !== 2;
+            
+            // console.log(animations[i]);
+            if(isColorChange){
+                const [bar1, bar2] = animations[i];
+                const sty1 = arrayBars[bar1].style;
+                const sty2 = arrayBars[bar2].style;
 
-        this.setState(sortedArray);
+                const color = i%3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+                setTimeout(() => {
+                    sty1.backgroundImage = color;
+                    sty2.backgroundImage = color;
+                }, i*ANIMATION_SPEED_MS);
+            }
+            else{
+                setTimeout(() => {
+                    arrayBars[animations[i][0]].style.height = `${animations[i][1]}px`;
+                    arrayBars[animations[i][0]].style.marginBottom = `${1000-animations[i][1]}px`;
+                }, i*ANIMATION_SPEED_MS);
+            }
+        }
     }
 
     quickSort(){
@@ -52,7 +78,7 @@ class SortingVisualizer extends React.Component{
     render(){
         const {array} = this.state;
         return (
-            <>
+            <div fluid className='array-container'>
                 <div className = 'toolbar'>
                     <Button onClick = {()=>this.resetArray()} className = 'm-2'>Generate new array</Button>
                     <Button onClick = {()=>this.mergeSort()} className = 'm-2'>Merge Sort</Button>
@@ -66,17 +92,18 @@ class SortingVisualizer extends React.Component{
                         <div className = "array-bar" 
                             key = {idx} 
                             style={{
-                                height: `${value*0.6}px`, 
-                                width: 4, 
-                                marginLeft: 2, 
-                                marginRight: 2, 
-                                marginBottom:1000-`${value*0.6}`
+                                height: `${value}px`, 
+                                width: 3, 
+                                marginLeft: 0.5, 
+                                marginRight: 0.5, 
+                                backgroundImage: '#247BA0',
+                                marginBottom: 1000-`${value}`
                             }}>
                                 
                         </div>
                     ))}
                 </div>
-            </>
+            </div>
         );
     }
 }

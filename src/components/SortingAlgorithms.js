@@ -1,39 +1,48 @@
-function merge(array, start, mid, end){
+function merge(array, start, mid, end, auxArray, animations){
     let p = start;
     let q = mid+1;
+    let ind = start;
 
-    const auxArray = array;
+    while(p<=mid && q<=end){
+        animations.push([p,q]);
+        animations.push([p,q]);
 
-    for(let i = start; i<=end; i++){
-        if(p>mid){
-            auxArray.push(array[q++]);
-        }
-        else if(q>end){
-            auxArray.push(array[p++]);
-        }
-        else if(array[p]<array[q]){
-
-            auxArray.push(array[p++]);
+        if(auxArray[p]<auxArray[q]){
+            animations.push([ind,auxArray[p]]);
+            array[ind++] = auxArray[p++];
         }
         else{
-            auxArray.push(array[q++]);
+            animations.push([ind,auxArray[q]]);
+            array[ind++] = auxArray[q++];
         }
     }
 
-    for(let i = 0; i<auxArray.length; i++){
-        array[start+i] = auxArray[i];
+    while(p<=mid){
+        animations.push([p,q-1]);
+        animations.push([p,q-1]);
+        animations.push([ind,auxArray[p]]);
+        array[ind++] = auxArray[p++];
     }
+
+    while(q<=end){
+        animations.push([p-1,q]);
+        animations.push([p-1,q]);
+        animations.push([ind,auxArray[q]]);
+        array[ind++] = auxArray[q++];
+    }
+
+    console.log(array+" "+start+" "+mid);
 
 }
 
-function mergeSortHelper(array, start, end){
+function mergeSortHelper(array, start, end, auxArray, animations){
     if(start<end){
-        let mid = Math.floor((end+start)/2);
+        const mid = Math.floor((end+start)/2);
 
-        mergeSortHelper(array, start, mid);
-        mergeSortHelper(array, mid+1, end);
+        mergeSortHelper(auxArray, start, mid, array, animations);
+        mergeSortHelper(auxArray, mid+1, end, array, animations);
 
-        merge(array, start, mid, end);
+        merge(array, start, mid, end, auxArray, animations);
     }
 };
 
@@ -43,8 +52,10 @@ export const mergeSort = array => {
     if(array.length <= 1){
         return array;
     }
+    
+    const auxArray = array.slice();
 
-    mergeSortHelper(array, 0, array.length-1);
+    mergeSortHelper(array, 0, array.length -1, auxArray, animations);
 
     return animations;
 };
