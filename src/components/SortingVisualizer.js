@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button} from 'reactstrap';
 import './SortingVisualizer.css';
+import {mergeSort,bubbleSort} from './SortingAlgorithms.js';
 
 class SortingVisualizer extends React.Component{
     constructor(props){
@@ -25,7 +26,12 @@ class SortingVisualizer extends React.Component{
     }
 
     mergeSort(){
+        const javaScriptSortedArray = this.state.array
+        .sort((a,b) => a-b);
 
+        const sortedArray = mergeSort(this.state.array);
+
+        this.setState(sortedArray);
     }
 
     quickSort(){
@@ -37,6 +43,9 @@ class SortingVisualizer extends React.Component{
     }
 
     bubbleSort(){
+        const sortedArray = bubbleSort(this.state.array);
+
+        this.setState(sortedArray);
     }
 
 
