@@ -1,12 +1,12 @@
 import React from 'react';
-import {Button, Container} from 'reactstrap';
+import {Button} from 'reactstrap';
 import './SortingVisualizer.css';
 import {mergeSort,bubbleSort} from './SortingAlgorithms.js';
 
-const ANIMATION_SPEED_MS = 1;
+const ANIMATION_SPEED_MS = 2;
 const NUMBER_OF_ARRAY_BARS = 470;
 const PRIMARY_COLOR = 'linear-gradient(#0A2342, #A3EFF5)';
-const SECONDARY_COLOR = 'red';
+// const SECONDARY_COLOR = 'red';
 
 class SortingVisualizer extends React.Component{
     constructor(props){
@@ -16,7 +16,6 @@ class SortingVisualizer extends React.Component{
             array: [],
         };
 
-        // this.mergeSort=this.mergeSort.bind(this);
     }
 
     componentDidMount() {
@@ -38,20 +37,19 @@ class SortingVisualizer extends React.Component{
         for(let i = 0; i<animations.length; i++){
             const arrayBars = document.getElementsByClassName('array-bar');
             const isColorChange = i%3 !== 2;
-            
-            // console.log(animations[i]);
-            if(isColorChange){
-                const [bar1, bar2] = animations[i];
-                const sty1 = arrayBars[bar1].style;
-                const sty2 = arrayBars[bar2].style;
 
-                const color = i%3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
-                setTimeout(() => {
-                    sty1.backgroundImage = color;
-                    sty2.backgroundImage = color;
-                }, i*ANIMATION_SPEED_MS);
-            }
-            else{
+            if(!isColorChange){
+            //     const [bar1, bar2] = animations[i];
+            //     const sty1 = arrayBars[bar1].style;
+            //     const sty2 = arrayBars[bar2].style;
+
+            //     const color = i%3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+            //setTimeout(() => {
+            //         sty1.backgroundImage = color;
+            //         sty2.backgroundImage = color;
+            //     }, i*ANIMATION_SPEED_MS);
+            // }
+            // else{
                 setTimeout(() => {
                     arrayBars[animations[i][0]].style.height = `${animations[i][1]}px`;
                     arrayBars[animations[i][0]].style.marginBottom = `${1000-animations[i][1]}px`;
@@ -96,7 +94,7 @@ class SortingVisualizer extends React.Component{
                                 width: 3, 
                                 marginLeft: 0.5, 
                                 marginRight: 0.5, 
-                                backgroundImage: '#247BA0',
+                                backgroundImage: PRIMARY_COLOR,
                                 marginBottom: 1000-`${value}`
                             }}>
                                 
