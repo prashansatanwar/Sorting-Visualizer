@@ -1,0 +1,15 @@
+.array-bar {
+  display: inline-block;
+  background-color: #247BA0;
+}
+
+.array-container {
+  position: center;
+}
+
+.toolbar{
+  margin: 10px;
+  padding: 2vh;
+  background-color: #70C1B3;
+
+}
