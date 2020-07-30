@@ -62,9 +62,13 @@ export const mergeSort = array => {
 
 
 export const bubbleSort = array => {
+    const animations = [];
     for(let i = 0; i<array.length; i++){
         for(let j = 0; j<array.length-1; j++){
             if(array[j]>array[j+1]){
+                animations.push([j,j+1]);
+                animations.push([j,j+1]);
+                animations.push([[j,array[j+1]],[j+1,array[j]]]);
                 const temp = array[j];
                 array[j] = array[j+1];
                 array[j+1] = temp;
@@ -72,5 +76,5 @@ export const bubbleSort = array => {
         }
     }
 
-    return array;
+    return animations;
 };
