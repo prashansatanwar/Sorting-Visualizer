@@ -99,3 +99,28 @@ export const insertionSort = array => {
     return animations;
 };
 
+export const selectionSort = array =>{
+    const animations = [];
+    
+    let min = 0;
+
+    for(let i = 0; i<array.length; i++){
+        min = i;
+        for(let j = i+1; j<array.length; j++){
+            if(array[j]<array[min]){
+                min = j;
+            }
+        }
+
+        animations.push([i,min]);
+        animations.push([i,min]);
+
+        animations.push([[min,array[i]],[i,array[min]]]);
+
+        const temp = array[min];
+        array[min] = array[i];
+        array[i] = temp;
+    }
+
+    return animations;
+};
