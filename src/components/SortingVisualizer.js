@@ -24,18 +24,37 @@ class SortingVisualizer extends React.Component{
     }
     
     resetArray(){
+        const button = document.getElementsByClassName('sort-button');
+        for(let x = 0; x<button.length; x++){
+            button[x].disabled = !button[x].disabled;
+        }
+
         const array = [];
         for(let i = 0; i<NUMBER_OF_ARRAY_BARS; i++){
             array.push(randomIntFromInterval(10,1000)*0.6);
-        }
 
+            if(i == (NUMBER_OF_ARRAY_BARS-1)){
+                for(let x = 0; x<button.length; x++){
+                    button[x].disabled = !button[x].disabled;
+                }
+            }
+        }
         this.setState({array});
     }
 
     mergeSort(){
-        const animations = mergeSort(this.state.array);
+        const button = document.getElementsByClassName('sort-button');
+        for(let x = 0; x<button.length; x++){
+            button[x].disabled = !button[x].disabled;
+        }
+
+        const array = this.state.array.slice();
+        const animations = mergeSort(array);
 
         for(let i = 0; i<animations.length; i++){
+            // if(document.getElementsByClassName('reset-button')[0].disabled){
+
+            // }
             const arrayBars = document.getElementsByClassName('array-bar');
             const isColorChange = i%3 !== 2;
 
@@ -54,15 +73,28 @@ class SortingVisualizer extends React.Component{
                 setTimeout(() => {
                     arrayBars[animations[i][0]].style.height = `${animations[i][1]}px`;
                     arrayBars[animations[i][0]].style.marginBottom = `${1000-animations[i][1]}px`;
+                    
+                if(i==animations.length-1){
+                    for(let x = 0; x<button.length; x++){
+                        button[x].disabled = !button[x].disabled;
+                    }
+                }
+
                 },i*ANIMATION_SPEED_MS);
             }
         }
+
     }
 
     selectionSort(){
-        const animations = selectionSort(this.state.array);
+        const button = document.getElementsByClassName('sort-button');
+        for(let x = 0; x<button.length; x++){
+            button[x].disabled = !button[x].disabled;
+        }
 
-        console.log(animations);
+        const array = this.state.array.slice();
+        const animations = selectionSort(this.state.array);
+    
 
         for(let i = 0; i<animations.length; i++){
             const arrayBars = document.getElementsByClassName('array-bar');
@@ -87,15 +119,26 @@ class SortingVisualizer extends React.Component{
 
                     arrayBars[animations[i][1][0]].style.height = `${animations[i][1][1]}px`;
                     arrayBars[animations[i][1][0]].style.marginBottom = `${1000-animations[i][1][1]}px`;
+                
+                    if(i==animations.length-1){
+                        for(let x = 0; x<button.length; x++){
+                            button[x].disabled = !button[x].disabled;
+                        }
+                    }
+                
                 }, i*ANIMATION_SPEED_MS);
             }
         }
     }
 
     insertionSort(){
-        const animations = insertionSort(this.state.array);
+        const button = document.getElementsByClassName('sort-button');
+        for(let x = 0; x<button.length; x++){
+            button[x].disabled = !button[x].disabled;
+        }
 
-        console.log(animations);
+        const array = this.state.array.slice();
+        const animations = insertionSort(this.state.array);
 
         for(let i = 0; i<animations.length; i++){
             const arrayBars = document.getElementsByClassName('array-bar');
@@ -120,6 +163,13 @@ class SortingVisualizer extends React.Component{
 
                     arrayBars[animations[i][1][0]].style.height = `${animations[i][1][1]}px`;
                     arrayBars[animations[i][1][0]].style.marginBottom = `${1000-animations[i][1][1]}px`;
+                
+                    if(i==animations.length-1){
+                        for(let x = 0; x<button.length; x++){
+                            button[x].disabled = !button[x].disabled;
+                        }
+                    }
+                
                 }, i*ANIMATION_SPEED_MS);
             }
         }
@@ -127,9 +177,13 @@ class SortingVisualizer extends React.Component{
     }
 
     bubbleSort(){
-        const animations = bubbleSort(this.state.array);
+        const button = document.getElementsByClassName('sort-button');
+        for(let x = 0; x<button.length; x++){
+            button[x].disabled = !button[x].disabled;
+        }
 
-        console.log(animations);
+        const array = this.state.array.slice();
+        const animations = bubbleSort(this.state.array);
 
         for(let i = 0; i<animations.length; i++){
             const arrayBars = document.getElementsByClassName('array-bar');
@@ -154,15 +208,26 @@ class SortingVisualizer extends React.Component{
 
                     arrayBars[animations[i][1][0]].style.height = `${animations[i][1][1]}px`;
                     arrayBars[animations[i][1][0]].style.marginBottom = `${1000-animations[i][1][1]}px`;
+                
+                    if(i==animations.length-1){
+                        for(let x = 0; x<button.length; x++){
+                            button[x].disabled = !button[x].disabled;
+                        }
+                    }
+                
                 }, i*ANIMATION_SPEED_MS);
             }
         }
     }
 
     quickSort(){
-        const animations = quickSort(this.state.array);
+        const button = document.getElementsByClassName('sort-button');
+        for(let x = 0; x<button.length; x++){
+            button[x].disabled = !button[x].disabled;
+        }
 
-        console.log(animations);
+        const array = this.state.array.slice();
+        const animations = quickSort(this.state.array);
 
         for(let i = 0; i<animations.length; i++){
             const arrayBars = document.getElementsByClassName('array-bar');
@@ -187,6 +252,13 @@ class SortingVisualizer extends React.Component{
 
                     arrayBars[animations[i][1][0]].style.height = `${animations[i][1][1]}px`;
                     arrayBars[animations[i][1][0]].style.marginBottom = `${1000-animations[i][1][1]}px`;
+                
+                    if(i==animations.length-1){
+                        for(let x = 0; x<button.length; x++){
+                            button[x].disabled = !button[x].disabled;
+                        }
+                    }
+                
                 }, i*ANIMATION_SPEED_MS);
             }
         }
@@ -198,12 +270,12 @@ class SortingVisualizer extends React.Component{
         return (
             <div fluid className='array-container'>
                 <div className = 'toolbar'>
-                    <Button onClick = {()=>this.resetArray()} className = 'm-2'>Generate new array</Button>
-                    <Button onClick = {()=>this.mergeSort()} className = 'm-2'>Merge Sort</Button>
-                    <Button onClick = {()=>this.quickSort()} className = 'm-2'>Quick Sort</Button>
-                    <Button onClick = {()=>this.selectionSort()} className = 'm-2'>Selection Sort</Button>
-                    <Button onClick = {()=>this.insertionSort()} className = 'm-2'>Insertion Sort</Button>
-                    <Button onClick = {()=>this.bubbleSort()} className = 'm-2'>Bubble Sort</Button>
+                    <Button disabled = {false} onClick = {()=>this.resetArray()} className = 'reset_button'>Reset</Button>
+                    <Button disabled = {false} onClick = {()=>this.mergeSort()} className = 'sort-button'>Merge Sort</Button>
+                    <Button disabled = {false} onClick = {()=>this.quickSort()} className = 'sort-button'>Quick Sort</Button>
+                    <Button disabled = {false} onClick = {()=>this.selectionSort()} className = 'sort-button'>Selection Sort</Button>
+                    <Button disabled = {false} onClick = {()=>this.insertionSort()} className = 'sort-button'>Insertion Sort</Button>
+                    <Button disabled = {false} onClick = {()=>this.bubbleSort()} className = 'sort-button'>Bubble Sort</Button>
 
                 </div>
                 <div className = 'array-container'>

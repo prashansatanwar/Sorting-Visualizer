@@ -31,7 +31,7 @@ function merge(array, start, mid, end, auxArray, animations){
         array[ind++] = auxArray[q++];
     }
 
-    console.log(array+" "+start+" "+mid);
+    // console.log(array+" "+start+" "+mid);
 
 }
 
