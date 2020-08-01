@@ -14,8 +14,8 @@ class SortingVisualizer extends React.Component{
         this.state = {
             array: [],
             animation_speed: 3,
-            number_of_array_bars: 620,
-            width: 2,
+            number_of_array_bars: 300,
+            width: 3,
         };
 
     }
@@ -303,8 +303,8 @@ class SortingVisualizer extends React.Component{
                     <Button disabled = {false} onClick = {()=>window.location.reload(false)} className = 'reset'>Reset</Button>
 
                     Number of bars: 
-                    <input type ="range" min="10" max="620" className = "slider" value = {this.state.number_of_array_bars} onChange = {(event)=>
-                        {this.setState({number_of_array_bars: event.target.value, width: ((1240/this.state.number_of_array_bars)+0.5)|0});
+                    <input type ="range" min="10" max="300" className = "slider" value = {this.state.number_of_array_bars} onChange = {(event)=>
+                        {this.setState({number_of_array_bars: event.target.value, width:((600/this.state.number_of_array_bars)>3)? ((600/this.state.number_of_array_bars))|0:3});
                         this.resetArray();
                     }
                         
@@ -312,8 +312,8 @@ class SortingVisualizer extends React.Component{
                     </input>
                 
                     Speed: 
-                    <input type ="range" min="1" max="10" className = "slider" value = {this.animation_speed} onChange = {(event)=>
-                        this.setState({animation_speed: 10-event.target.value})
+                    <input type ="range" min="1" max="1000" className = "slider" value = {this.animation_speed} onChange = {(event)=>
+                        this.setState({animation_speed: 1000-event.target.value})
                         
                         }>
                     </input>
